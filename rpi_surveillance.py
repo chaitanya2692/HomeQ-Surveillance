@@ -9,13 +9,13 @@ import pyautogui as pg
 import os
 
 chrome_options = Options()
-# chrome_options.add_argument("--headless")
+chrome_options.add_argument("--headless")
 
 def runner():
     url = "https://www.homeq.se/search?roomMin=2&areaMin=50&rentMax=10000&is_everyone=true&is_student=true&selectedShapes=urban_area.4368%3B5e076ebbc599fa845a722a9a378eb5e2742628a8317c7703145432ae2f78477c%3BG%C3%B6teborg"
     browser = webdriver.Chrome(executable_path='chromedriver', options=chrome_options)
     browser.get(url)
-    # time.sleep(5)
+    time.sleep(5)
     html = browser.page_source
     soup = BeautifulSoup(html, 'html.parser')
     browser.quit()
@@ -43,7 +43,7 @@ def runner():
 
     csv_file.close()
     time.sleep(1)
-    # TODO - send message cleanly
+    
     if len(list_new_homes) != 0:
         print("Sending new apartments")
         numbers = ["+46735799272"]
