@@ -43,7 +43,7 @@ def runner():
 
     csv_file.close()
     time.sleep(1)
-    
+
     if len(list_new_homes) != 0:
         print("Sending new apartments")
         numbers = ["+46735799272"]
