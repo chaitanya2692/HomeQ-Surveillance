@@ -6,14 +6,15 @@ from selenium.webdriver.chrome.options import Options
 import time
 import webbrowser as web
 import pyautogui as pg
+import pywhatkit
 import os
 
 chrome_options = Options()
 chrome_options.add_argument("--headless")
 
 def runner():
-    url = "https://www.homeq.se/search?roomMin=2&areaMin=50&rentMax=10000&is_everyone=true&is_student=true&selectedShapes=urban_area.4368%3B5e076ebbc599fa845a722a9a378eb5e2742628a8317c7703145432ae2f78477c%3BG%C3%B6teborg"
-    browser = webdriver.Chrome(executable_path='chromedriver', options=chrome_options)
+    url = "https://www.homeq.se/search?roomMin=2&areaMin=50&rentMax=10000&sorting=publish_date.desc&is_everyone=true&is_student=true&selectedShapes=urban_area.4368%3B5e076ebbc599fa845a722a9a378eb5e2742628a8317c7703145432ae2f78477c%3BG%C3%B6teborg"
+    browser = webdriver.Chrome(executable_path='/usr/bin/chromedriver', options=chrome_options)
     browser.get(url)
     time.sleep(5)
     html = browser.page_source
@@ -46,22 +47,15 @@ def runner():
 
     if len(list_new_homes) != 0:
         print("Sending new apartments")
-        numbers = ["+46735799272"]
+        numbers = ["+46735799272", "+46760714945", "+919423990720"]
         for phone in numbers:
             for home in list_new_homes: 
-                message = "https://web.whatsapp.com/send?phone=" + phone + "&text=" + home[0]
-                web.open(message)            
-                time.sleep(80)
-                pg.press('esc')
-                time.sleep(10)
-                pg.press('enter')
-                time.sleep(10)
-                pg.hotkey('ctrl', 'w')
+                pywhatkit.sendwhatmsg_instantly(phone, home[0], 90, True, 5)
+                time.sleep(1)
     return
 
 
 if __name__ == "__main__":
     runner()
     t = time.localtime()
-    print("Slept at", time.strftime("%H:%M:%S", t))
-        
+    print("Slept at", time.strftime("%H:%M:%S", t))   
